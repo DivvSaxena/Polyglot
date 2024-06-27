@@ -5,7 +5,13 @@ import spainflag from '../assets/sp-flag.png';
 import Groq from 'groq-sdk';
 
 // Use import.meta.env for Vite
-const groq = new Groq({ apiKey: import.meta.env.VITE_GROQ_API_KEY, dangerouslyAllowBrowser: true });
+const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+if (!apiKey) {
+  throw new Error("The VITE_GROQ_API_KEY environment variable is missing or empty; either provide it, or instantiate the Groq client with an apiKey option, like new Groq({ apiKey: 'My API Key' }).");
+}
+
+const groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
 
 const Main = () => {
   const [state, setState] = React.useState(true);
